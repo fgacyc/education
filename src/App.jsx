@@ -4,6 +4,8 @@ import ActionSheetButtons from "@/components/action-sheet-buttons.jsx";
 import ActionSheetMenu from "@/components/action-sheet-menu.jsx";
 import {useUserStore} from "@/store/user-store.js";
 import {useEffect} from "react";
+import "@arco-design/web-react/dist/css/arco.css";
+
 
 function App() {
     const initUser = useUserStore(state => state.initUser);
