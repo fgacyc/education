@@ -12,6 +12,7 @@ import CourseOnGoing from "@/pages/course/course-on-going.jsx";
 import CourseComplete from "@/pages/course/course-complete.jsx";
 import CourseCertificate from "@/pages/course/course-certificate.jsx";
 import CourseReview from "@/pages/course/course-review.jsx";
+import CourseReport from "@/pages/course/course-report.jsx";
 
 export default function MainRoutes() {
     return (
@@ -30,6 +31,7 @@ export default function MainRoutes() {
             <Route path="/course_plan/complete" element={<CourseComplete/>}/>
             <Route path="/course_plan/certificate/:id" element={<CourseCertificate/>}/>
             <Route path="/course_plan/review/:id" element={<CourseReview/>}/>
+                <Route path="/course_plan/report" element={<CourseReport/>}/>
         </Routes>
     )
 }

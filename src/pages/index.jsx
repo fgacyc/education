@@ -117,12 +117,10 @@ function CourseCard({course}){
 
 
 export default function Index() {
-    const [count, setCount] = useState(0)
     const navigate = useNavigate();
-    const [UID,language] = useUserStore(state => [state.UID,state.language]);
-    const {t} =  useTranslation();
     const {coursePlanNotStart,isLoading,isError} = useCoursePlansNotStart();
-    // console.log(coursePlanNotStart)
+    const currentActiveCardIndex = useInfoCardStore(state => state.currentCard);
+
 
 
 
@@ -134,6 +132,13 @@ export default function Index() {
                 <UiInfoCard data={coursePlanNotStart}/>
             </div>
             <div className={"h-[calc(100vh-260px)] overflow-y-auto border-blue-500 px-2 "}>
+                {
+                    currentActiveCardIndex ===2 && <div className={"bg-orange-400 p-2 text-sm rounded text-white"}
+                                                        onClick={() => navigate(`/course_plan/report`)}
+                    >
+                        Completed records are incorrect or not showing up? Please click here to report!
+                    </div>
+                }
                 {
                     !isLoading && !isError && coursePlanNotStart.map((course,index) => (
                         <CourseCard key={index} course={course}/>
