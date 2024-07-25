@@ -4,7 +4,7 @@ import {fetcher} from "@/tools.js";
 const host = import.meta.env.VITE_API_URL;
 
 export function useCoursePlans() {
-    const { data, error, isLoading } = useSWR(`${host}/course_plans/detail`, fetcher)
+    const { data, error, isLoading } = useSWR(`${host}/course_plans/record`, fetcher)
 
     return {
         coursePlan: data,
