@@ -14,26 +14,20 @@ export function datetimeFormatToMMDDYYYY(zoneDateTime) {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-export function addTimeStrings(timeStrings) {
-    function parseTimeString(timeString) {
-        const [hours, minutes, seconds] = timeString.split(':').map(Number);
-        if(hours && minutes && seconds){
-            return hours * 3600 + minutes * 60 + seconds;
-        }else{
-            return 0;
-        }
-
+export function addTimeStrings(timeArray) {
+    function parseTime(timeStr) {
+        const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+        return hours * 3600 + minutes * 60 + seconds;
     }
 
     function formatTime(totalSeconds) {
         const hours = Math.floor(totalSeconds / 3600);
-        totalSeconds %= 3600;
-        const minutes = Math.floor(totalSeconds / 60);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
         return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 
-    const totalSeconds = timeStrings.reduce((acc, timeString) => acc + parseTimeString(timeString), 0);
+    const totalSeconds = timeArray.reduce((acc, time) => acc + parseTime(time), 0);
     return formatTime(totalSeconds);
 }
 

@@ -87,7 +87,7 @@ export default function Admin() {
 
         let course_plan_id = await  createCoursePlan(
             currentSelectedCourse,
-            "445564646464", // todo: get UID from store
+            UID,
             minDate,
             maxDate
         )
