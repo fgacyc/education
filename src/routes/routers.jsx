@@ -5,6 +5,7 @@ import Settings from "@/pages/framework/settings.jsx";
 import PrivacyPolicy from "@/pages/framework/privacy-policy.jsx";
 import TermsOfService from "@/pages/framework/terms-of-service.jsx";
 import Admin from "@/pages/admin.jsx";
+import Record from "@/pages/record.jsx";
 
 export default function MainRoutes(){
     return (
@@ -16,6 +17,7 @@ export default function MainRoutes(){
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/records" element={<Record />} />
         </Routes>
     )
 }

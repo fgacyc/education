@@ -1,4 +1,17 @@
+import useSWR from "swr";
+import {fetcher} from "@/tools.js";
+
 const host = import.meta.env.VITE_API_URL;
+
+export function useCoursePlans() {
+    const { data, error, isLoading } = useSWR(`${host}/course_plans/detail`, fetcher)
+
+    return {
+        coursePlan: data,
+        isLoading,
+        isError: error,
+    }
+}
 
 
 export async function createCoursePlan(course_id, teacher_id, start_datetime, end_datetime) {
