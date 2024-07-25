@@ -78,10 +78,10 @@ export default function CourseOnGoing() {
     useEffect(() => {
         if (isLoading) return;
         const isShow = courseVideoOnGoing.every(record => record.user_video_completion_id !== null);
+
         if(isShow){
-            createCourseCertificate(UID, id).then(() => {
-                setIsShowCertificate(isShow);
-            });
+            setIsShowCertificate(isShow);
+            void createCourseCertificate(UID, id);
         }
     }, [isLoading, courseVideoOnGoing]);
 

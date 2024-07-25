@@ -1,15 +1,43 @@
 import {useUserStore} from "@/store/user-store.js";
 import {useInfoCardStore} from "@/store/info-card-store.js";
+import {useEffect, useState} from "react";
 
 function getFormattedTodayDate() {
     const today  = new Date();
     return today.toLocaleDateString('en-US');
 }
 
-const UiInfoCard  = ({activeNumber,onGoingNumber,completedNumber}) => {
+const UiInfoCard  = ({data}) => {
     const user = useUserStore(state => state.user);
     const formattedDate = getFormattedTodayDate();
     const [currentCardIndex,setCurrentCardIndex] = useInfoCardStore(state => [state.currentCard,state.setCurrentCard]);
+
+    const [enrolledCoursesIDs,completedCoursesIDs] = useInfoCardStore(state => [state.enrolledCoursesIDs,state.completedCoursesIDs]);
+
+    const [activeNumber, setActiveNumber] = useState( 0);
+    const [onGoingNumber, setOnGoingNumber] = useState(0);
+    const [completedNumber, setCompletedNumber] = useState(0);
+
+
+    useEffect(() => {
+        if(data){
+           setActiveNumber(data.length);
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if(enrolledCoursesIDs){
+            setOnGoingNumber(enrolledCoursesIDs.length);
+        }
+    }, [enrolledCoursesIDs]);
+
+    useEffect(() => {
+        if(completedCoursesIDs){
+            setCompletedNumber(completedCoursesIDs.length);
+        }
+    }, [completedCoursesIDs]);
+
+
 
     const cardData = [
         {

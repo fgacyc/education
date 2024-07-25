@@ -12,17 +12,18 @@ import {GoArrowRight, GoClock} from "react-icons/go";
 import {datetimeFormat} from "@/tools.js";
 import {useInfoCardStore} from "@/store/info-card-store.js";
 
+
 function CourseCard({course}){
     const navigate = useNavigate();
-    const buttonText= "Enroll";
     const UID = useUserStore(state => state.UID);
     const [status,setStatus] = useState("not_enrolled")
     const currentCardIndex= useInfoCardStore(state => state.currentCard);
     const [isShow,setIsShow] = useState(true);
+    const [addEnrolledCourse,addCompletedCourse] = useInfoCardStore(state => [state.addEnrolledCourse,state.addCompletedCourse]);
 
 
     const {coursePlanStatus,isLoading,isError} = useCoursePlansStatus(course.course_plan_id,UID);
-    // console.log("coursePlanStatus",course.course_plan_id,coursePlanStatus)
+
 
 
     const clickHandler = () => {
@@ -40,9 +41,11 @@ function CourseCard({course}){
 
         if(coursePlanStatus === "enrolled"){
             setStatus("enrolled")
+            addEnrolledCourse(course.course_plan_id)
         }
         else if(coursePlanStatus === "completed"){
             setStatus("completed")
+            addCompletedCourse(course.course_plan_id)
         }
         else if(coursePlanStatus === "not_enrolled"){
             setStatus("not_enrolled")
@@ -119,20 +122,21 @@ export default function Index() {
     const [UID,language] = useUserStore(state => [state.UID,state.language]);
     const {t} =  useTranslation();
     const {coursePlanNotStart,isLoading,isError} = useCoursePlansNotStart();
-
     // console.log(coursePlanNotStart)
+
+
 
 
     return (
         <div className={""}>
             <NavBar ifShowBackArrow={false}>Education</NavBar>
             <div className={"p-2"}>
-                <UiInfoCard activeNumber={1} onGoingNumber={2} completedNumber={3}/>
+                <UiInfoCard data={coursePlanNotStart}/>
             </div>
             <div className={"h-[calc(100vh-260px)] overflow-y-auto border-blue-500 px-2 "}>
                 {
-                    !isLoading && !isError && coursePlanNotStart.map((course) => (
-                        <CourseCard key={course.id} course={course}/>
+                    !isLoading && !isError && coursePlanNotStart.map((course,index) => (
+                        <CourseCard key={index} course={course}/>
                     ))
                 }
             </div>

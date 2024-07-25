@@ -9,5 +9,15 @@ export const useInfoCardStore = create((set) => ({
     completedCoursesIDs: [],
 
     setEnrolledCoursesIDs: (value) => set({enrolledCoursesIDs: value}),
-    setCompletedCoursesIDs: (value) => set({completedCoursesIDs: value})
+    setCompletedCoursesIDs: (value) => set({completedCoursesIDs: value}),
+
+    addEnrolledCourse: (id) => set(state => {
+        if (state.enrolledCoursesIDs.includes(id)) return state
+        return {enrolledCoursesIDs: [...state.enrolledCoursesIDs, id]}
+    }),
+
+    addCompletedCourse: (id) => set(state => {
+        if (state.completedCoursesIDs.includes(id)) return state
+        return {completedCoursesIDs: [...state.completedCoursesIDs, id]}
+    }),
 }))
