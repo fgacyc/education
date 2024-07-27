@@ -20,7 +20,7 @@ function CourseCard({course}){
     const currentCardIndex= useInfoCardStore(state => state.currentCard);
     const [isShow,setIsShow] = useState(true);
     const [addEnrolledCourse,addCompletedCourse] = useInfoCardStore(state => [state.addEnrolledCourse,state.addCompletedCourse]);
-
+    const {t} = useTranslation();
 
     const {coursePlanStatus,isLoading,isError} = useCoursePlansStatus(course.course_plan_id,UID);
 
@@ -96,17 +96,17 @@ function CourseCard({course}){
                                 border rounded-lg py-2 px-4 bg-[#4dabf7]`}>
                 {
                     status === "not_enrolled" && (
-                        <div onClick={clickHandler}>Enroll</div>
+                        <div onClick={clickHandler}>{t("Enroll")}</div>
                     )
                 }
                 {
                     status === "enrolled" && (
-                        <div onClick={clickHandler}>Continue</div>
+                        <div onClick={clickHandler}>{t("Continue")}</div>
                     )
                 }
                 {
                     status === "completed" && (
-                        <div onClick={clickHandler}>Review</div>
+                        <div onClick={clickHandler}>{t("Review")}</div>
                     )
                 }
                 <GoArrowRight/>
@@ -120,14 +120,13 @@ export default function Index() {
     const navigate = useNavigate();
     const {coursePlanNotStart,isLoading,isError} = useCoursePlansNotStart();
     const currentActiveCardIndex = useInfoCardStore(state => state.currentCard);
-
-
+    const {t} = useTranslation();
 
 
 
     return (
         <div className={""}>
-            <NavBar ifShowBackArrow={false}>Education</NavBar>
+            <NavBar ifShowBackArrow={false}>Equip</NavBar>
             <div className={"p-2"}>
                 <UiInfoCard data={coursePlanNotStart}/>
             </div>

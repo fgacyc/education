@@ -10,7 +10,7 @@ export default function TermsOfService() {
 
     return (
         <div>
-            <NavBar ifShowBackArrow={true}>{t("Terms of Service")}</NavBar>
+            <NavBar ifShowBackArrow={true}>Terms of Service</NavBar>
             {
                 language === "zh"
                     ? <div className="bg-white rounded-lg shadow-md p-8 h-screen overflow-y-scroll">

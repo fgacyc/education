@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+    font-family: SF Pro Display;
+    src: url("/SF-Pro-Display-Regular.otf");
+}
+
 body{
     background-color: #F2F3F5;
     overflow-y: hidden;
+    font-family:  'SF Pro Display', sans-serif;
+    font-size: 16px;
 }

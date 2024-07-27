@@ -16,7 +16,7 @@ export default function About() {
 
     return (
         <div>
-            <NavBar ifShowBackArrow={true}>{t("About")}</NavBar>
+            <NavBar ifShowBackArrow={true}>About</NavBar>
             <div className={"flex flex-col items-center p-8 bg-white mb-2"}>
                 <img src="/app_icon.png" alt="app logo" className={"w-16 rounded-full"}/>
                 <h1 className={"text-black text-xl text-center mt-4"}>

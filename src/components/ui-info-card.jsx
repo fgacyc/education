@@ -1,6 +1,7 @@
 import {useUserStore} from "@/store/user-store.js";
 import {useInfoCardStore} from "@/store/info-card-store.js";
 import {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 
 function getFormattedTodayDate() {
     const today  = new Date();
@@ -17,7 +18,7 @@ const UiInfoCard  = ({data}) => {
     const [activeNumber, setActiveNumber] = useState( 0);
     const [onGoingNumber, setOnGoingNumber] = useState(0);
     const [completedNumber, setCompletedNumber] = useState(0);
-
+    const {t} = useTranslation();
 
     useEffect(() => {
         if(data){
@@ -41,15 +42,15 @@ const UiInfoCard  = ({data}) => {
 
     const cardData = [
         {
-            title: "Active",
+            title: t("Active"),
             count: activeNumber
         },
         {
-            title: "On Going",
+            title: t("On Going"),
             count:  onGoingNumber
         },
         {
-            title: "Completed",
+            title: t("Completed"),
             count:  completedNumber
         }
     ]

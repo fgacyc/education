@@ -4,11 +4,12 @@ import {getYoutubeEmbedUrl} from "@/tools.js";
 import {useUserStore} from "@/store/user-store.js";
 import {GoPersonFill} from "react-icons/go";
 import {useCourseVideoReview} from "@/api/course_video_plan.js";
+import i18n from "i18next";
 
 export default function CourseReview() {
     const {id} = useParams();
     const {courseVideoReview, isLoading, isError} = useCourseVideoReview(id);
-    const language = useUserStore.getState().language;
+    const language =  i18n.language;
 
 
     return (

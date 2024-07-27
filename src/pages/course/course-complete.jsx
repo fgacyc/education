@@ -6,6 +6,7 @@ import {check_if_code_correct} from "@/api/course_video_plan.js";
 import {useUserStore} from "@/store/user-store.js";
 import NavBar from "@/components/nav-bar.jsx";
 import {createUserVideoCompletion} from "@/api/user_video_completetion.js";
+import {useTranslation} from "react-i18next";
 
 export default function CourseComplete() {
     // course video plan id
@@ -14,6 +15,7 @@ export default function CourseComplete() {
     const [verificationCode, setVerificationCode] = useState("")
     const UID = useUserStore.getState().UID;
     const navigation = useNavigate();
+    const {t} = useTranslation();
 
     async function handleSubmit() {
         if(verificationCode.length !== 6){
@@ -41,7 +43,7 @@ export default function CourseComplete() {
     return (
         <div className={"h-screen relative"}>
             <NavBar ifShowBackArrow={true}>Lesson Complete</NavBar>
-           <Block title={"Lesson Code"}>
+           <Block title={t("Lesson Complete Code")}>
                <VerificationCode
                    onChange={setVerificationCode}
                    length={6}

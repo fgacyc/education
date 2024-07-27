@@ -10,9 +10,10 @@ import {useCourses} from "@/api/course.js";
 import {fetchVideos} from "@/api/course_video.js";
 import {createCoursePlan} from "@/api/course_plan.js";
 import {createCourseVideoPlan} from "@/api/course_video_plan.js";
+import i18n from "i18next";
 
 const Option = Select.Option;
-const lang = useUserStore.getState().language;
+const lang =  i18n.language;
 const UID = useUserStore.getState().UID;
 
 

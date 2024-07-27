@@ -8,8 +8,9 @@ import {addTimeStrings, datetimeFormat} from "@/tools.js";
 import {GoPersonFill} from "react-icons/go";
 import OvalLoading from "@/components/oval-loading.jsx";
 import {create_enrollment} from "@/api/enrollment.js";
+import {useTranslation} from "react-i18next";
 
-const language = useUserStore.getState().language;
+
 
 export default function CoursePlanInfo() {
     const {id} = useParams();
@@ -20,6 +21,8 @@ export default function CoursePlanInfo() {
     const [videoDuration,setVideoDuration] = useState([]);
     const UID = useUserStore.getState().UID;
     const navigate = useNavigate();
+    const {t,i18n} = useTranslation();
+    const language = i18n.language;
 
     console.log(coursePlanInfo)
 
@@ -96,19 +99,19 @@ export default function CoursePlanInfo() {
                                             </div>
                                             <div className="grid grid-cols-2 gap-4 my-3">
                                                 <div>
-                                                    <div className="text-sm text-gray-400">Classes</div>
+                                                    <div className="text-sm text-gray-400">{t("Classes")}</div>
                                                     <div className="text-lg font-bold">{course.video_count}</div>
                                                 </div>
                                                 <div>
-                                                    <div className="text-sm text-gray-400">Durations</div>
+                                                    <div className="text-sm text-gray-400">{t("Durations")}</div>
                                                     <div className="text-lg font-bold">{addTimeStrings(videoDuration)}</div>
                                                 </div>
                                                 <div>
-                                                    <div className="text-sm text-gray-400">Language</div>
+                                                    <div className="text-sm text-gray-400">{t("Language")}</div>
                                                     <div className="text-lg font-bold">Chinese</div>
                                                 </div>
                                                 <div>
-                                                    <div className="text-sm text-gray-400">Start Date</div>
+                                                    <div className="text-sm text-gray-400">{t("Start Date")}</div>
                                                     <div className="text-lg font-bold">{datetimeFormat(course.start_datetime)}</div>
                                                 </div>
                                             </div>
@@ -125,7 +128,7 @@ export default function CoursePlanInfo() {
                                 border rounded-lg py-2 px-4 bg-[#3B82F6]`}
                  onClick={enrollHandler}
             >
-                <div>Enroll Now!</div>
+                <div>{t("Enroll Now")}!</div>
             </div>
         </div>
     )

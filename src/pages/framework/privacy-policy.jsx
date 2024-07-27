@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
 
     return (
         <div>
-            <NavBar ifShowBackArrow={true}>{t("Privacy Policy")}</NavBar>
+            <NavBar ifShowBackArrow={true}>Privacy Policy</NavBar>
             {
                 language === "zh"
                     ? <div className="bg-white rounded-lg shadow-md p-8 overflow-y-scroll h-screen">

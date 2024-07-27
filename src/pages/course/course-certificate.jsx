@@ -4,13 +4,16 @@ import {useCourseCertificate} from "@/api/certificate.js";
 import {useParams} from "react-router-dom";
 import OvalLoading from "@/components/oval-loading.jsx";
 import {datetimeFormatToMMDDYYYY} from "@/tools.js";
+import i18n from "i18next";
+import {useTranslation} from "react-i18next";
 
 export default function CourseCertificate(){
     const {id} = useParams();
-    const lang = useUserStore.getState().language;
+    const lang =  i18n.language;
     const user = useUserStore.getState().user;
     const UID = useUserStore.getState().UID;
     const {courseCertificate,isLoading,isError} = useCourseCertificate(id,UID);
+    const {t} = useTranslation();
 
     console.log("courseCertificate",courseCertificate)
     return (
@@ -22,18 +25,18 @@ export default function CourseCertificate(){
                         <div className="flex flex-col items-center justify-center gap-6">
                             <div className="flex flex-col items-center justify-center gap-2">
                                 <img src={"/cyc-logo.png"} alt="logo" className="w-20 mb-2"/>
-                                <h1 className="text-2xl font-bold text-center">Course Completion Certificate</h1>
+                                <h1 className="text-2xl font-bold text-center">{t("Course Completion Certificate")}</h1>
                             </div>
                             <div className="flex flex-col items-center justify-center gap-2">
-                                <h2 className="text-2xl font-semibold">Congratulations!</h2>
-                                <p className="text-lg font-medium">This certificate is awarded to</p>
+                                <h2 className="text-2xl font-semibold">{t("Congratulations")}!</h2>
+                                <p className="text-lg font-medium">{t("This certificate is awarded to")}</p>
                                 <h3 className="text-2xl font-bold">{user.name}</h3>
-                                <p className="text-lg font-medium">for successfully completing the</p>
+                                <p className="text-lg font-medium">{t("for successfully completing the")}</p>
                                 <h4 className="text-xl font-bold h-8">
                                     {lang === "en" ? courseCertificate?.course_name_en : courseCertificate?.course_name_zh}
                                 </h4>
                                 <p className="text-lg font-medium">
-                                    on <span className="font-bold">
+                                    {t("on")} <span className="font-bold">
                                 {courseCertificate && datetimeFormatToMMDDYYYY(courseCertificate.created_at)}
                             </span>
                                 </p>
@@ -45,7 +48,7 @@ export default function CourseCertificate(){
                                     className={"bg-[#0068ff] text-white p-3 rounded-lg absolute bottom-5 w-[calc(100%-32px)] mx-4"}
                                     // onClick={viewCertificate}
                                 >
-                                    Share Certificate
+                                    {t("Share Certificate")}
                                 </button>
                             </div>
                         </div>

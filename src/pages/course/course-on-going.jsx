@@ -7,11 +7,16 @@ import {useEffect, useState} from "react";
 import {useCourseVideoOnGoing} from "@/api/course_video_plan.js";
 import NavBar from "@/components/nav-bar.jsx";
 import {createCourseCertificate} from "@/api/certificate.js";
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
+
+
 
 function OnGoingCard({record}) {
     const navigation = useNavigate();
     const uid = useUserStore.getState().UID;
     const [progress, setProgress] = useState(0);
+    const lang = i18n.language;
 
 
     useEffect(() => {
@@ -31,6 +36,8 @@ function OnGoingCard({record}) {
         }
     }
 
+
+
     return (
         <div
             className={`flex justify-between items-center  p-4 border-b min-h-[100px] bg-white rounded-xl shadow
@@ -41,7 +48,8 @@ function OnGoingCard({record}) {
                 <div className={"w-[80%] min-h-12"}>
                     {/*<span>{record.video_name_en} | {record.video_name_zh}</span>*/}
                     {
-                        record.video_name_en
+                        lang === "en" ? <span className={"text-lg font-semibold"}>{record.video_name_en}</span> :
+                            <span className={"text-lg font-semibold"}>{record.video_name_zh}</span>
                     }
                 </div>
                 <div className={"text-sm text-gray-400 flex items-center mt-2"}>
@@ -68,7 +76,7 @@ export default function CourseOnGoing() {
     const [isShowCertificate, setIsShowCertificate] = useState(false);
     const navigate = useNavigate();
     const UID = useUserStore.getState().UID;
-
+    const {t} = useTranslation();
     function viewCertificate(){
          navigate(`/course_plan/certificate/${id}`);
     }
@@ -108,7 +116,7 @@ export default function CourseOnGoing() {
                 <button className={"bg-[#0068ff] text-white p-3 rounded-lg absolute bottom-5 w-[calc(100%-32px)] mx-4"}
                         onClick={viewCertificate}
                 >
-                    View Certificate
+                    {t("View Certificate")}
                 </button>
             }
         </div>
