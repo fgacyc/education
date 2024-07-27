@@ -29,12 +29,12 @@ function CourseCard({course}) {
         if (status === "not_enrolled") {
             // if course is MSJ 1, everyone can enroll
             console.log(course.course_id)
-            if(course.id ===1){
+            if(course.course_id ===1){
                 navigate(`/course_plan/${course.course_plan_id}`)
             }
 
             // if not MSJ 1, only previous course completed can enroll
-            if(certificatesCourseIDs.includes(course.course_id-1)){
+            else if(certificatesCourseIDs.includes(course.course_id-1)){
                 navigate(`/course_plan/${course.course_plan_id}`)
             }
             else{
