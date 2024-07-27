@@ -133,9 +133,12 @@ export default function Index() {
     const UID = useUserStore(state => state.UID);
     const {certificates} = useUserCertificates(UID);
     const setCertificatesCourseIDs = useInfoCardStore(state => state.setCertificatesCourseIDs);
-    if(certificates){
+    try{
         const completedCourses = certificates.map(certificate => certificate.course_id);
         setCertificatesCourseIDs(completedCourses);
+    }
+    catch (e) {
+        console.log(e)
     }
     const {t} = useTranslation();
 
