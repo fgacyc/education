@@ -35,6 +35,7 @@ export function useCourseVideoReview(course_plan_id) {
 
 
 export async function createCourseVideoPlan(courses_plan_id, course_video_id, start_datetime, code) {
+    if (!courses_plan_id || !course_video_id || !start_datetime || !code) return;
     const coursePlan = {
         courses_plan_id,
         course_video_id,
@@ -53,6 +54,7 @@ export async function createCourseVideoPlan(courses_plan_id, course_video_id, st
 }
 
 export async function check_if_code_correct (course_video_plan_id, code) {
+    if (!course_video_plan_id || !code) return;
     const course_video_plan_data = {
         course_video_plan_id,
         code

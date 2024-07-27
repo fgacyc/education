@@ -2,6 +2,7 @@ const host = import.meta.env.VITE_API_URL;
 
 
 export async function create_enrollment(user_id, courses_plan_id){
+    if (!user_id || !courses_plan_id) return
     const enrollment = {
         user_id,
         courses_plan_id

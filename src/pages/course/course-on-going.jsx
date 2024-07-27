@@ -81,6 +81,7 @@ export default function CourseOnGoing() {
          navigate(`/course_plan/certificate/${id}`);
     }
 
+    // console.log("courseVideoOnGoing",courseVideoOnGoing)
 
 
     useEffect(() => {
@@ -89,7 +90,7 @@ export default function CourseOnGoing() {
 
         if(isShow){
             setIsShowCertificate(isShow);
-            void createCourseCertificate(UID, id);
+            void createCourseCertificate(UID, id,courseVideoOnGoing[0].course_id);
         }
     }, [isLoading, courseVideoOnGoing]);
 

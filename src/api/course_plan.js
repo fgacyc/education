@@ -46,6 +46,7 @@ export function useCoursePlansStatus(course_plan_id,user_id) {
 
 
 export async function createCoursePlan(course_id, teacher_id, start_datetime, end_datetime) {
+    if (!course_id || !teacher_id || !start_datetime || !end_datetime) return;
     const coursePlan = {
         course_id,
         teacher_id,

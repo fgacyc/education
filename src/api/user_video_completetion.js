@@ -1,6 +1,7 @@
 const host = import.meta.env.VITE_API_URL;
 
 export async function createUserVideoCompletion(user_id, course_video_plan_id) {
+    if (!user_id || !course_video_plan_id) return;
     const userVideoCompletion = {
         user_id,
         course_video_plan_id

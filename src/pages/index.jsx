@@ -1,8 +1,5 @@
-import reactLogo from '@/assets/react.svg'
-import fgaTechLogo from '/fga_tech.png'
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import ProfileToken from "@/components/profile-token.jsx";
 import {useUserStore} from "@/store/user-store.js";
 import {useTranslation} from "react-i18next";
 import UiInfoCard from "@/components/ui-info-card.jsx";
@@ -11,24 +8,42 @@ import {useCoursePlansNotStart, useCoursePlansStatus} from "@/api/course_plan.js
 import {GoArrowRight, GoClock} from "react-icons/go";
 import {datetimeFormat} from "@/tools.js";
 import {useInfoCardStore} from "@/store/info-card-store.js";
+import {useUserCertificates} from "@/api/certificate.js";
+import {NoticeBar} from "antd-mobile";
 
 
-function CourseCard({course}){
+function CourseCard({course}) {
     const navigate = useNavigate();
-    const UID = useUserStore(state => state.UID);
-    const [status,setStatus] = useState("not_enrolled")
-    const currentCardIndex= useInfoCardStore(state => state.currentCard);
-    const [isShow,setIsShow] = useState(true);
-    const [addEnrolledCourse,addCompletedCourse] = useInfoCardStore(state => [state.addEnrolledCourse,state.addCompletedCourse]);
+    const [status, setStatus] = useState("not_enrolled")
+    const currentCardIndex = useInfoCardStore(state => state.currentCard);
+    const [isShow, setIsShow] = useState(true);
+    const [addEnrolledCourse, addCompletedCourse] = useInfoCardStore(state => [state.addEnrolledCourse, state.addCompletedCourse]);
     const {t} = useTranslation();
-
-    const {coursePlanStatus,isLoading,isError} = useCoursePlansStatus(course.course_plan_id,UID);
+    const certificatesCourseIDs = useInfoCardStore(state => state.certificatesCourseIDs);
+    const UID = useUserStore(state => state.UID);
+    const {coursePlanStatus,isLoading} = useCoursePlansStatus(course.course_plan_id,UID);
 
 
 
     const clickHandler = () => {
-        if(status === "not_enrolled"){
-            navigate(`/course_plan/${course.course_plan_id}`)
+        if (status === "not_enrolled") {
+            // if course is MSJ 1, everyone can enroll
+            console.log(course.course_id)
+            if(course.id ===1){
+                navigate(`/course_plan/${course.course_plan_id}`)
+            }
+
+            // if not MSJ 1, only previous course completed can enroll
+            if(certificatesCourseIDs.includes(course.course_id-1)){
+                navigate(`/course_plan/${course.course_plan_id}`)
+            }
+            else{
+                alert("Please complete the previous course to enroll this course")
+            }
+
+
+
+
         }
         else if (status === "enrolled" || status === "completed"){
             navigate(`/course_plan/on-going/${course.course_plan_id}`)
@@ -36,41 +51,36 @@ function CourseCard({course}){
     }
 
     useEffect(() => {
-        if(isLoading) return;
+        if (isLoading) return;
         if (!coursePlanStatus) return;
 
-        if(coursePlanStatus === "enrolled"){
+        if (coursePlanStatus === "enrolled") {
             setStatus("enrolled")
             addEnrolledCourse(course.course_plan_id)
-        }
-        else if(coursePlanStatus === "completed"){
+        } else if (coursePlanStatus === "completed") {
             setStatus("completed")
             addCompletedCourse(course.course_plan_id)
-        }
-        else if(coursePlanStatus === "not_enrolled"){
+        } else if (coursePlanStatus === "not_enrolled") {
             setStatus("not_enrolled")
         }
-    }, [isLoading,coursePlanStatus]);
+    }, [isLoading, coursePlanStatus]);
 
     useEffect(() => {
-        if (currentCardIndex === 0){
+        if (currentCardIndex === 0) {
             setIsShow(true)
-        }
-        else if (currentCardIndex === 1 && status === "enrolled"){
+        } else if (currentCardIndex === 1 && status === "enrolled") {
             setIsShow(true)
-        }
-        else if (currentCardIndex === 2 && status === "completed"){
+        } else if (currentCardIndex === 2 && status === "completed") {
             setIsShow(true)
-        }
-        else {
+        } else {
             setIsShow(false)
         }
 
     }, [currentCardIndex]);
 
     return (
-        <div  className={`bg-white p-2 my-2 rounded shadow relative
-                        ${isShow ? "block" : "hidden" }
+        <div className={`bg-white p-2 my-2 rounded shadow relative
+                        ${isShow ? "block" : "hidden"}
         `}>
             <img src={course.course_cover} className={"w-full h-52 object-cover rounded"} alt="background image"/>
             {/*<div className={"absolute top-4 right-4 flex flex-col items-center bg-white rounded-lg px-1 py-2"}>*/}
@@ -118,8 +128,15 @@ function CourseCard({course}){
 
 export default function Index() {
     const navigate = useNavigate();
-    const {coursePlanNotStart,isLoading,isError} = useCoursePlansNotStart();
+    const {coursePlanNotStart, isLoading, isError} = useCoursePlansNotStart();
     const currentActiveCardIndex = useInfoCardStore(state => state.currentCard);
+    const UID = useUserStore(state => state.UID);
+    const {certificates} = useUserCertificates(UID);
+    const setCertificatesCourseIDs = useInfoCardStore(state => state.setCertificatesCourseIDs);
+    if(certificates){
+        const completedCourses = certificates.map(certificate => certificate.course_id);
+        setCertificatesCourseIDs(completedCourses);
+    }
     const {t} = useTranslation();
 
 
@@ -127,19 +144,22 @@ export default function Index() {
     return (
         <div className={""}>
             <NavBar ifShowBackArrow={false}>Equip</NavBar>
+            <NoticeBar content={t("Please submit your course progress before using this Mini APP")}
+                       onClick={() => navigate("/course_plan/report")}
+                       color='info' />
             <div className={"p-2"}>
                 <UiInfoCard data={coursePlanNotStart}/>
             </div>
             <div className={"h-[calc(100vh-260px)] overflow-y-auto border-blue-500 px-2 "}>
                 {
-                    currentActiveCardIndex ===2 && <div className={"bg-orange-400 p-2 text-sm rounded text-white"}
-                                                        onClick={() => navigate(`/course_plan/report`)}
+                    currentActiveCardIndex === 2 && <div className={"bg-orange-400 p-2 text-sm rounded text-white"}
+                                                         onClick={() => navigate(`/course_plan/report`)}
                     >
                         Completed records are incorrect or not showing up? Please click here to report!
                     </div>
                 }
                 {
-                    !isLoading && !isError && coursePlanNotStart.map((course,index) => (
+                    !isLoading && !isError && coursePlanNotStart.map((course, index) => (
                         <CourseCard key={index} course={course}/>
                     ))
                 }

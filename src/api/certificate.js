@@ -13,11 +13,25 @@ export function useCourseCertificate(course_plan_id,user_id) {
     }
 }
 
-export async function createCourseCertificate(user_id, course_plan_id) {
+export function useUserCertificates(user_id) {
+    const { data, error, isLoading } = useSWR(`${host}/certificates/${user_id}`, fetcher)
+
+    return {
+        certificates: data,
+        isLoading,
+        isError: error,
+    }
+}
+
+export async function createCourseCertificate(user_id, course_plan_id,course_id) {
+    if (!user_id || !course_plan_id || !course_id) return;
+
     const courseCertificate = {
         user_id,
-        course_plan_id
+        course_plan_id,
+        course_id
     }
+
     const response = await fetch(`${host}/certificates`, {
         method: 'POST',
         headers: {

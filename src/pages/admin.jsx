@@ -92,7 +92,7 @@ export default function Admin() {
             minDate,
             maxDate
         )
-         // console.log("course_plan_id", course_plan_id)
+         console.log("course_plan_id", course_plan_id)
         if(course_plan_id ===false){
             alert('Failed to create course plan');
             return;
