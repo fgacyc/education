@@ -45,5 +45,6 @@
   "Congratulations" :  "恭喜",
   "Course Completion Certificate" :  "课程完成证书",
   "Lesson Complete Code": "课程完成代码",
-  "Please submit your course progress before using this Mini APP":"使用本Mini APP之前请提交你的课程进度~"
+  "Please submit your course progress before using this Mini APP":"使用本Mini APP之前请提交你的课程进度~",
+  "Select courses you already completed:" : "选择你已经完成的课程："
 }

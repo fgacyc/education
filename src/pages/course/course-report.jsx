@@ -5,6 +5,7 @@ import {useUserStore} from "@/store/user-store.js";
 import Block from "@/components/block.jsx";
 import {Checkbox  } from "@arco-design/web-react";
 import {createReport} from "@/api/report.js";
+import {useTranslation} from "react-i18next";
 const CheckboxGroup = Checkbox.Group;
 
 
@@ -54,13 +55,14 @@ export default function CourseReport() {
             alert("Failed to submit report");
         })
     }
+    const {t} = useTranslation();
 
     return (
         <div  className={"h-screen relative"}>
             <NavBar ifShowBackArrow={true}>Report</NavBar>
             <Block>
                 <div className={"text-base font-bold mb-4"}>
-                    Select courses you already completed:
+                    {t("Select courses you already completed:")}
                 </div>
                 <CheckboxGroup
                     options={courseOptions}
